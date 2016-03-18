@@ -1,4 +1,4 @@
-System.register(['angular2/core', './component.service'], function(exports_1, context_1) {
+System.register(['angular2/core', './course.service', './auto-grow.directive'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,33 +10,36 @@ System.register(['angular2/core', './component.service'], function(exports_1, co
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, component_service_1;
+    var core_1, course_service_1, auto_grow_directive_1;
     var CoursesComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (component_service_1_1) {
-                component_service_1 = component_service_1_1;
+            function (course_service_1_1) {
+                course_service_1 = course_service_1_1;
+            },
+            function (auto_grow_directive_1_1) {
+                auto_grow_directive_1 = auto_grow_directive_1_1;
             }],
         execute: function() {
             // To know angular that class is a component class, add decorator
             CoursesComponent = (function () {
-                function CoursesComponent() {
-                    // We don't need to set the type because setting that string type script already knows
+                function CoursesComponent(courseService) {
                     this.title = "IT";
-                    this.courses = ['Networking', 'Software architecture', 'Design'];
-                    new component_service_1.ComponentService();
+                    this.courses = courseService.getCourses();
                 }
                 CoursesComponent = __decorate([
                     core_1.Component({
                         // Set the tag in html or css selector
                         selector: 'courses',
                         // The HTML file that it will add when we insert the component
-                        template: "\n        <h2>Courses</h2>\n        {{ title }}\n        <ul>\n            <li *ngFor = \"#course of courses\">{{ course }}</li>\n        </ul>\n        "
+                        template: "\n        <h2>Courses</h2>\n        {{ title }}\n        <input type=\"text\" autoGrow />\n        <ul>\n            <li *ngFor = \"#course of courses\">{{ course }}</li>\n        </ul>\n        ",
+                        providers: [course_service_1.CourseService],
+                        directives: [auto_grow_directive_1.AutoGrowDirective]
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [course_service_1.CourseService])
                 ], CoursesComponent);
                 return CoursesComponent;
             }());

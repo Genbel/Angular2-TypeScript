@@ -1,5 +1,6 @@
 import {Component} from 'angular2/core'
-import {ComponentService} from './component.service'
+import {CourseService} from './course.service'
+import {AutoGrowDirective} from './auto-grow.directive'
 
 // To know angular that class is a component class, add decorator
 @Component({
@@ -9,17 +10,21 @@ import {ComponentService} from './component.service'
     template: `
         <h2>Courses</h2>
         {{ title }}
+        <input type="text" autoGrow />
         <ul>
             <li *ngFor = "#course of courses">{{ course }}</li>
         </ul>
-        `
+        `,
+    providers: [CourseService],
+    directives: [AutoGrowDirective]
 })
 export class CoursesComponent{
     
-    constructor(){
-        new ComponentService(); 
-    }
-    // We don't need to set the type because setting that string type script already knows
     title = "IT";
-    courses = ['Networking', 'Software architecture', 'Design'];
+    courses: string[];
+    
+    constructor(courseService: CourseService){
+        this.courses = courseService.getCourses();
+    }
+    
 }
