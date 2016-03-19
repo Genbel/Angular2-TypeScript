@@ -1,4 +1,4 @@
-System.register(['angular2/core'], function(exports_1, context_1) {
+System.register(['angular2/core', './people.service', './people.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,39 +10,32 @@ System.register(['angular2/core'], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
+    var core_1, people_service_1, people_component_1;
     var AppComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (people_service_1_1) {
+                people_service_1 = people_service_1_1;
+            },
+            function (people_component_1_1) {
+                people_component_1 = people_component_1_1;
             }],
         execute: function() {
-            // This it calls in Type Script decorator and is part of the class
             AppComponent = (function () {
-                function AppComponent() {
-                    this.isActive = true;
-                    this.token = "Lina";
-                    // what we get on the above line this simplify that action with ngmodel
-                    this.twoWayDataBinding = "Hi Linute!";
-                    this.oneWay = "Hi Oier!";
+                function AppComponent(peopleService) {
+                    this.people = peopleService.getPeople();
                 }
-                AppComponent.prototype.clickEvent = function ($event) {
-                    console.log('Click');
-                };
-                AppComponent.prototype.hoverEvent = function () {
-                    console.log('Hover');
-                };
-                AppComponent.prototype.showTypeText = function (text) {
-                    console.log("Typed text: " + text);
-                    console.log("Two way data binding text: " + this.twoWayDataBinding);
-                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n                <button class=\"btn btn-primary\" [class.hello]=\"isActive\" [class.active]=\"isActive\" [attr.data-id]=\"token\" [id]=\"token\" (click)=\"clickEvent($event)\">Class binding</button>\n                <button class=\"btn btn-warning\" [style.color]=\"'black'\" [style.border-color]=\"isActive ? 'Black' : 'White'\" (mouseover)=\"hoverEvent()\">Style binding</button>\n                <input type=\"text\" [value]=\"oneWay\"/><input type=\"text\" (input)=\"showTypeText($event.target.value)\" />\n                <input type=\"text\" [(ngModel)]=\"twoWayDataBinding\" />\n                <h1>{{title}}</h1>\n                <div><i class=\"glyphicon\" [class.glyphicon-star]=\"isActive\" [class.glyphicon-star-empty]=\"!isActive\" (click)=\"isActive= !isActive\"></i></div> \n         \n    "
+                        template: "\n    <div class=\"row\">\n        <people *ngFor=\"#person of people\" [person]=\"person\"></people>\n    </div>\n    ",
+                        providers: [people_service_1.PeopleService],
+                        directives: [people_component_1.PeopleComponent]
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [people_service_1.PeopleService])
                 ], AppComponent);
                 return AppComponent;
             }());
@@ -50,21 +43,46 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         }
     }
 });
-/* ANGULAR JUMP START LESSON
-
-import {Component} from 'angular2/core'
-import {CoursesComponent} from './courses.component'
-import {AuthorsComponent} from './authors.component'
+/*import {Component} from 'angular2/core'
+import {FavoriteComponent} from './favorite.component';
+import {StackOverFlow} from './stackoverflow.component'
 
 // This it calls in Type Script decorator and is part of the class
 @Component({
     selector: 'my-app',
-    template: `<h1>Hello Angular 2</h1>
-                <courses></courses>
-                <authors></authors>`,
-    // We specify the components or directive that we've used inside of the template for this component
-    directives: [CoursesComponent, AuthorsComponent]
+    template: `
+    <div class="row" style="padding:20px">
+        <div class="col-md-12">
+            <favorite [is-favorite]="post.favorite" [likes]="post.likes" (change-event)="onFavoriteChange($event)" (vote)="votePoint($event)"></favorite>
+        </div>
+        <div class="col-md-12">
+            <stackoverflow [topicLikes]="stackOverFlow.likes" [myVote]="stackOverFlow.voted" (vote)="votePoint($event)"></stackoverflow>
+            <h4>The user {{vote}} the answer</h4>
+        </div>
+    </div>`,
+    directives:[FavoriteComponent, StackOverFlow]
 })
 export class AppComponent {
+    
+    vote = "doesn't have any opinion about";
+    
+    post = {
+        title: 'Hello Angular2',
+        favorite: false,
+        likes: 10
+    }
+    
+    stackOverFlow = {
+        likes: 10,
+        voted: 0
+    }
+    
+    onFavoriteChange($event){
+        console.log($event);
+    }
+    
+    votePoint($event){
+        this.vote = $event.myVote;
+    }
 }*/ 
 //# sourceMappingURL=app.component.js.map

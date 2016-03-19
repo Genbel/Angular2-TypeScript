@@ -1,0 +1,2 @@
+<i class="glyphicon" [class.glyphicon-star] = "isFavorite" [class.glyphicon-star-empty]="!isFavorite" (click) = "starEvent()"></i>
+<i class="glyphicon glyphicon-heart" [class.hover] = "isFavorite" (click) = "likeEvent()">{{ likes }}</i>
